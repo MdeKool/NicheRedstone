@@ -15,7 +15,7 @@ class Block(BlockBase):
     owner_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class PlayerBase(BaseModel):
@@ -31,4 +31,4 @@ class Player(PlayerBase):
     blocks: list[Block] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
