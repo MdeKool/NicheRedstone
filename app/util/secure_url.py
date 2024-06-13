@@ -14,8 +14,6 @@ def url_for(context: dict, name: str, **path_params) -> str:
     http_url = request.url_for(name, **path_params)
     # If the request does not come from staging.campusenergie.nl do not change the scheme to https
     # (changing the scheme when running locally breaks getting the stylesheets)
-    if "jojaba.nl" in str(request.url) and "jojaba.nl" not in str(
-        request.url.path
-    ):
+    if "jojaba.nl" in str(request.url) and "jojaba.nl" not in str(request.url.path):
         return str(http_url).replace("http", "https", 1)
     return http_url

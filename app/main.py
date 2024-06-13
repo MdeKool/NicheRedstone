@@ -29,5 +29,5 @@ async def root(request: Request, db: Session = Depends(get_db)):
         "partials/index.html",
         {
             "request": request,
-        }
+        },
     )

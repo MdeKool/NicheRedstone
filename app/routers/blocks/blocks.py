@@ -10,19 +10,13 @@ from app.db.crud import create_block, get_blocks, get_block_by_id
 
 
 templates = Jinja2Templates(directory="templates")
-router = APIRouter(
-    prefix="/blocks"
-)
+router = APIRouter(prefix="/blocks")
 
 
 @router.get("/")
 async def root(request: Request, db: saSession = Depends(get_db)):
     return templates.TemplateResponse(
-        "blocks.html",
-        {
-            "request": request,
-            "blocks": get_blocks(db)
-        }
+        "blocks.html", {"request": request, "blocks": get_blocks(db)}
     )
 
 
@@ -31,15 +25,11 @@ async def add_block(request: Request, db: saSession = Depends(get_db)):
     block = create_block(
         db,
         block=BlockCreate(id=random.randint(1, 65535)),
-        owner_id=random.choice([_ for _ in range(4)])
+        owner_id=random.choice([_ for _ in range(4)]),
     )
     return templates.TemplateResponse(
         "partials/block.html",
-        {
-            "request": request,
-            "id": block.id,
-            "owner_id": block.owner_id
-        }
+        {"request": request, "id": block.id, "owner_id": block.owner_id},
     )
 
 

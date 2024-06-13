@@ -37,4 +37,3 @@ def create_block(db: Session, block: schemas.BlockCreate, owner_id: int):
     db.commit()
     db.refresh(db_block)
     return db_block
-
