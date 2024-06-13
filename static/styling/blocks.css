@@ -1,0 +1,66 @@
+#blocks-container {
+    border: 2px solid black;
+    border-radius: 8px;
+    justify-items: auto;
+    margin: 8px;
+}
+
+#action-bar {
+    background-color: dimgrey;
+    display: flex;
+    flex: auto;
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    border-bottom: 2px solid black;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+#action-bar button {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 24px;
+    color: #2f2f2f;
+    background-color: grey;
+    border-radius: 12px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+}
+
+#action-bar button:hover {
+    outline: 2px darkslategrey solid;
+}
+
+.block-actions {
+    margin: 0 10px 0 10px;
+}
+
+#blocks {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.block {
+    margin: 10px;
+    width: 160px;
+    height: 100px;
+    background-color: dimgrey;
+    outline: 2px solid black;
+    border-radius: 10px;
+}
+.block p {
+    margin: 10px;
+}
+
+.block-buttons {
+    align-self: end;
+    display: flex;
+    justify-content: space-between;
+}
+
+.block-buttons button {
+    margin: auto;
+}

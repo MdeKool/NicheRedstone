@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/styling/index.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/styling/base.css">
+    {% block styling %}
+    {% endblock %}
     <title>
     {% block title %}
         Minecraft Wifi Block
@@ -13,7 +16,16 @@
 </head>
 <body>
 {% block header %}
-
+    <div id="navbar">
+        <div id="icon">
+            <a id="home-button" href="/">
+                <img id="icon" src="/static/favicon.ico" width="42px" height="42px">
+            </a>
+        </div>
+        <a href="/blocks">Blocks</a>
+        <div class="separator"></div>
+        <a href="/plans">Plans</a>
+    </div>
 {% endblock %}
 <!--------------->
 {% block main %}
