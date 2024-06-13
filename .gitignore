@@ -1,2 +1,4 @@
-WiFiBlock.db
 .venv/
+.idea/
+
+WiFiBlock.db
