@@ -27,6 +27,10 @@ def get_blocks(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Block).offset(skip).limit(limit).all()
 
 
+def get_block_by_id(db: Session, block_id: int):
+    return db.query(models.Block).filter(models.Block.id == block_id).first()
+
+
 def create_block(db: Session, block: schemas.BlockCreate, owner_id: int):
     db_block = models.Block(**block.dict(), owner_id=owner_id)
     db.add(db_block)
