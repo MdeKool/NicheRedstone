@@ -53,6 +53,9 @@ async function change_sort(){
             });
             break;
         }
+        default: {
+            alert("There was an error: invalid sorting option");
+        }
     }
 
     blocks.forEach(block => {
