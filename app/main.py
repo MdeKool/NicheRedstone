@@ -26,7 +26,7 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/")
 async def root(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(
-        "index.html",
+        "partials/index.html",
         {
             "request": request,
         }
