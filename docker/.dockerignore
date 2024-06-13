@@ -3,4 +3,6 @@
 .github/
 **/__pycache__/
 
-**/WiFiBlock.db
+docker/
+.gitignore
+WiFiBlock.db
