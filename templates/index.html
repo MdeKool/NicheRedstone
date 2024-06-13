@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% from "macros/block_macro.html" import block %}
+
+{% block javascript %}
+    <script defer src="/js/block-actions.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block main %}
+    <div id="action-bar">
+        <button id="add" class="block-actions" onclick="add_block()">Add block</button>
+        <div class="block-actions">
+            <input type="text" placeholder="Block ID" id="remove-block-id">
+            <input type="button" value="remove block" onclick="remove_block()">
+        </div>
+    </div>
+    <div id="blocks">
+    </div>
+{% endblock %}

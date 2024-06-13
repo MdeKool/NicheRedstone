@@ -1,0 +1,43 @@
+body {
+    background-color: darkslategrey;
+}
+
+#action-bar {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.block-actions {
+    margin: 0 10px 0 10px;
+}
+
+#blocks {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    border: 2px solid black;
+    justify-items: auto;
+}
+
+.block {
+    margin: 10px;
+    width: 160px;
+    height: 100px;
+    background-color: dimgrey;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.block p {
+    margin: 10px;
+}
+
+.block-buttons {
+    align-self: end;
+    display: flex;
+    justify-content: space-between;
+}
+
+.block-buttons button {
+    margin: auto;
+}

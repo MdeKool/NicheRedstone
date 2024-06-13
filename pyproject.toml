@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "Minecraft WiFi Block"
+version = "0.0.1"
+description = "A frontend for the MC WiFi Block mod"
+authors = ["M de Kool <matthijsdekool@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.109.2"
+starlette = "^0.36.3"
+uvicorn = "^0.27.1"
+gunicorn = "^22.0.0"
+jinja2 = "^3.1.4"
+sqlalchemy = "^2.0.30"
+alembic = "^1.13.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

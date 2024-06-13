@@ -1,0 +1,13 @@
+{% macro block(id) %}
+    <div class="block" id="block-{{ id }}">
+        <p>
+            ID: {{ id }}<br>
+            Owner:
+        </p>
+        <div class="block-buttons">
+            <button>Left</button>
+            <button>Middle</button>
+            <button>Right</button>
+        </div>
+    </div>
+{% endmacro %}
