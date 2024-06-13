@@ -3,14 +3,14 @@ version: "3.9"
 services:
   web:
     build:
-      
+      dockerfile: docker/Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ../:/app
-      - /var/opt/db:/app/WiFiBlock.db
+      - ./:/app
+      - /var/opt/db:/var/opt/db
     environment:
-      - DATABASE_URL=sqlite:///./WiFiBlock.db
-    command: >
-      bash -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
-#      bash -c "gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000 app.main:app"
+      - DATABASE_URL=sqlite:////var/opt/db/WiFiBlock.db
+    command:
+      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+#      sh -c "gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000 app.main:app"
