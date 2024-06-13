@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 
-import models
-import schemas
+from app.db import models, schemas
 
 
 def get_player(db: Session, uuid: int):
