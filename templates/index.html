@@ -15,5 +15,8 @@
         </div>
     </div>
     <div id="blocks">
+    {% for b in blocks %}
+        {{ block(b.id) }}
+    {% endfor %}
     </div>
 {% endblock %}
