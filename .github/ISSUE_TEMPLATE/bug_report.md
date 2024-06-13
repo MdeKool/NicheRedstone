@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+<- Please also label the bug with the corresponding tag. ->
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
