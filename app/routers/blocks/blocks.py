@@ -1,5 +1,6 @@
 import random
 
+import httpx
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session as saSession
@@ -16,8 +17,19 @@ router = APIRouter(prefix="/blocks")
 @router.get("/")
 async def root(request: Request, db: saSession = Depends(get_db)):
     return templates.TemplateResponse(
-        "blocks.html", {"request": request, "blocks": get_blocks(db)}
+        "partials/blocks.html", {"request": request, "blocks": get_blocks(db)}
     )
+
+
+@router.post("/register")
+async def register_block(request: Request, db: saSession = Depends(get_db)):
+    data = await request.json()
+    if create_block(
+        db,
+        block=BlockCreate(id=data["block_id"]),
+        owner_id=random.choice([_ for _ in range(4)]),
+    ):
+        return True
 
 
 @router.put("/add")
@@ -31,6 +43,15 @@ async def add_block(request: Request, db: saSession = Depends(get_db)):
         "partials/block.html",
         {"request": request, "id": block.id, "owner_id": block.owner_id},
     )
+
+
+@router.post("/signal")
+async def send_pulse(request: Request, db: saSession = Depends(get_db)):
+    data = await request.json()
+    async with httpx.AsyncClient() as client:
+        if await client.post("http://192.168.0.107:8080/callback", json=data) == 200:
+            return {"success": True}
+        return {"success": False}
 
 
 @router.put("/remove")
