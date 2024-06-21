@@ -7,9 +7,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - /var/opt/db:/var/opt/db
+      - ./.database:/var/opt/db
     environment:
-      - DATABASE_URL=sqlite:////var/opt/db/WiFiBlock.db
+      - DATABASE_URL=sqlite:////var/opt/db/ServerBlock.db
     command: >
       sh -c "alembic upgrade head
       && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"

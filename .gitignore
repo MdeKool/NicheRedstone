@@ -3,4 +3,4 @@
 .github/
 **/__pycache__/
 
-**/WiFiBlock.db
+.database/
