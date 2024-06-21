@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Minecraft WiFi Block"
-version = "0.0.1"
+version = "0.1.0"
 description = "A frontend for the MC WiFi Block mod"
 authors = ["M de Kool <matthijsdekool@gmail.com>"]
 readme = "README.md"
@@ -14,6 +14,7 @@ gunicorn = "^22.0.0"
 jinja2 = "^3.1.4"
 sqlalchemy = "^2.0.30"
 alembic = "^1.13.1"
+httpx = "^0.27.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
