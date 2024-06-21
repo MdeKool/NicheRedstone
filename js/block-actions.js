@@ -30,6 +30,27 @@ async function remove_block(blockId) {
 }
 
 
+async function send_signal(id, persist=false) {
+    fetch("/blocks/signal",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                block_id: id,
+                persist: persist
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data["success"]) {
+                alert("Something went wrong!");
+            }
+        });
+}
+
+
 async function change_sort(){
     const blockList = document.getElementById("blocks");
     const blocks = Array.from(blockList.children);
