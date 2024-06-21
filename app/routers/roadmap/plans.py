@@ -14,5 +14,5 @@ def root(request: Request, db: Session = Depends(get_db)):
         "partials/404.html",  # TODO: Create plans page
         {
             "request": request,
-        }
+        },
     )
