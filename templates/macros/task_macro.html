@@ -1,0 +1,16 @@
+{% macro task(t) %}
+    <li>
+        <input type="checkbox" id="task-{{ t.id }}">
+        <label for="task-{{ t.id }}">
+            {{ t.name }}
+            {% if t.description %}
+                : {{ t.description }}
+            {% endif %}
+        </label>
+        <ul>
+            {% for st in t.subtasks %}
+                {{ task(st) }}
+            {% endfor %}
+        </ul>
+    </li>
+{% endmacro %}

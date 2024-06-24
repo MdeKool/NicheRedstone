@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "macros/task_macro.html" import task %}
+
+{% block styling %}
+    <link rel="stylesheet" href="/styling/roadmap.css">
+{% endblock %}
+
+{% block main %}
+    <div id="task-list">
+        <ul>
+            {{ task({
+                'id': 1,
+                'name': 'Example task',
+                'description': 'This is an example description of an example task.',
+                'subtasks': [
+                    {
+                        'id': 2,
+                        'name': 'Example subtask',
+                    },
+                ]
+            }) }}
+        </ul>
+    </div>
+{% endblock %}
