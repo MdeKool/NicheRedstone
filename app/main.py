@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 
@@ -8,7 +8,6 @@ from app.routers.blocks import blocks
 from app.routers.misc import placeholders
 from app.routers.roadmap import plans
 from app.util.db_dependency import get_db
-from app.util.secure_url import url_for
 
 
 app = FastAPI(title="Minecraft WiFi Block", version="0.0.1")
@@ -24,7 +23,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/styling", StaticFiles(directory="static/styling"), name="styling")
 templates = Jinja2Templates(directory="templates")
 
-# templates.env.globals["url_for"] = url_for
+
+@app.exception_handler(404)
+async def custom_404_handler(request: Request, exc: HTTPException):
+    return templates.TemplateResponse("partials/404.html", {"request": request}, status_code=404)
 
 
 @app.get("/")
