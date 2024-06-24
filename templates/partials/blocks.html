@@ -25,7 +25,7 @@ Blocks
         </div>
         <div id="blocks">
             {% for b in blocks %}
-                {{ block(b.id, b.owner_id) }}
+                {{ block(b.id[-12:], b.owner_id[-12:]) }}
             {% endfor %}
         </div>
     </div>
