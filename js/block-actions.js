@@ -12,7 +12,6 @@ async function add_block() {
 
 
 async function remove_block(blockId) {
-    // let blockId = document.getElementById("remove-block-id").value;
     fetch("/blocks/remove",
         {
             method: "PUT",
