@@ -3,9 +3,10 @@
         <p>
             ID: {{ id }}<br>
             Owner: {{ owner_id }}
+            Status: TODO
         </p>
         <div class="block-buttons">
-            <button onclick="remove_block({{ id }});">X</button>
+            <button onclick="remove_block({{ id }});">&#x2716;</button>
             <button onclick="send_signal({{ id }})">Pulse</button>
             <button>Right</button>
         </div>
