@@ -1,3 +1,9 @@
 ul {
+    font-family: "Britannic Bold", cursive;
+    font-size: 24px;
     list-style: inside none none;
+}
+
+ul li:last-child {
+    margin-bottom: 10px;
 }
