@@ -26,7 +26,9 @@ templates = Jinja2Templates(directory="templates")
 
 @app.exception_handler(404)
 async def custom_404_handler(request: Request, exc: HTTPException):
-    return templates.TemplateResponse("partials/404.html", {"request": request}, status_code=404)
+    return templates.TemplateResponse(
+        "partials/404.html", {"request": request}, status_code=404
+    )
 
 
 @app.get("/")

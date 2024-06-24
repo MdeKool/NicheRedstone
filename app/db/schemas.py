@@ -46,7 +46,7 @@ class TaskCreate(TaskBase):
 
 class Task(TaskBase):
     status: str
-    subtasks: List['Task'] = Field(default_factory=list)
+    subtasks: List["Task"] = Field(default_factory=list)
 
     class Config:
         from_attributes = True
