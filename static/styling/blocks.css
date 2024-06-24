@@ -48,11 +48,12 @@
     width: 160px;
     height: 100px;
     background-color: dimgrey;
+    color: black;
     outline: 2px solid black;
     border-radius: 10px;
 }
 .block p {
-    margin: 10px;
+    margin: 6px;
 }
 
 .block-buttons {
@@ -62,5 +63,14 @@
 }
 
 .block-buttons button {
+    background-color: grey;
     margin: auto;
+    outline: #2f2f2f solid 2px;
+    border: none;
+    border-radius: 8px;
+}
+
+.block-buttons button:hover {
+    background-color: #3f4f4f;
+    transition: all 0.1s ease-in;
 }
