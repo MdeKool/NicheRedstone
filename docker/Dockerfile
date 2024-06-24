@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/var/cache/apk
 RUN python -m venv /venv
 ENV PATH=/venv/bin:$PATH VIRTUAL_ENV=/venv
 
-COPY ./ /app
+COPY ./pyproject.toml ./poetry.lock /app/
 RUN poetry install --only main
 
 RUN mkdir -p /var/opt/db
