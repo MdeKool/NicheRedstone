@@ -1,9 +1,11 @@
 import random
 
 import httpx
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, HTTPException
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session as saSession
+
+import hashlib
 
 from app.util.db_dependency import get_db
 from app.db.schemas import BlockCreate
@@ -24,12 +26,17 @@ async def root(request: Request, db: saSession = Depends(get_db)):
 @router.post("/register")
 async def register_block(request: Request, db: saSession = Depends(get_db)):
     data = await request.json()
-    if create_block(
+    m = hashlib.sha3_384()
+    m.update(bytes(data["block_id"].encode()))
+    hash_id = m.hexdigest()
+    if get_block_by_id(db, hash_id):
+        raise HTTPException(400, "Block already registered")
+    create_block(
         db,
-        block=BlockCreate(id=data["block_id"]),
-        owner_id=random.choice([_ for _ in range(4)]),
-    ):
-        return True
+        block=BlockCreate(id=hash_id),
+        owner_id=data["player_uuid"],
+    )
+    return True
 
 
 @router.put("/add")
