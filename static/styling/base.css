@@ -1,6 +1,17 @@
 body {
     background-color: darkslategrey;
+    color: navajowhite;
     margin: 0;
+}
+
+p {
+    text-align: center;
+    margin: 10px;
+}
+
+p a {
+    color: limegreen;
+    text-decoration: underline;
 }
 
 #navbar {
