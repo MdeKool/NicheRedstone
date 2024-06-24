@@ -11,7 +11,7 @@ templates = Jinja2Templates(directory="templates")
 @router.get("/")
 def root(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(
-        "partials/404.html",  # TODO: Create plans page
+        "partials/roadmap.html",
         {
             "request": request,
         },
