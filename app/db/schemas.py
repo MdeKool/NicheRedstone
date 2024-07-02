@@ -1,6 +1,6 @@
 # Pydantic models
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Optional, ClassVar
 
 
 class BlockBase(BaseModel):
@@ -8,7 +8,7 @@ class BlockBase(BaseModel):
 
 
 class BlockCreate(BlockBase):
-    id: str
+    block_id: str
 
 
 class Block(BlockBase):
@@ -36,7 +36,7 @@ class Player(PlayerBase):
 
 
 class TaskBase(BaseModel):
-    id: int
+    pass
 
 
 class TaskCreate(TaskBase):
@@ -45,6 +45,7 @@ class TaskCreate(TaskBase):
 
 
 class Task(TaskBase):
+    task_id: int
     status: str
     subtasks: List["Task"] = Field(default_factory=list)
 
@@ -61,4 +62,4 @@ class TaskUpdate(BaseModel):
         from_attributes = True
 
 
-Task.update_forward_refs()
+Task.model_rebuild()

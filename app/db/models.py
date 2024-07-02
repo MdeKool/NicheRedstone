@@ -8,7 +8,7 @@ from app.db.config import Base
 class Block(Base):
     __tablename__ = "blocks"
 
-    id = Column(String, primary_key=True)
+    block_id = Column(String, primary_key=True)
     owner = Column(String, ForeignKey("players.username"))
     owner_id = Column(String, ForeignKey("players.uuid"))
 
@@ -27,10 +27,13 @@ class Player(Base):
 class Task(Base):
     __tablename__ = "tasks"
 
-    id = Column(Integer, primary_key=True)
+    task_id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     description = Column(String)
     status = Column(String, default="TO-DO")
-    parent_id = Column(Integer, ForeignKey("tasks.id"), nullable=True)
+    parent_id = Column(Integer, ForeignKey("tasks.task_id"), nullable=True)
 
-    subtasks = relationship("Task", backref=backref("parent", remote_side=[id]))
+    subtasks = relationship("Task", backref=backref("parent", remote_side=[task_id]))
+
+    def __repr__(self):
+        return f"<Task {self.task_id}, name: {self.name}, parent: {self.parent_id}, subtasks: {self.subtasks}>"
