@@ -33,7 +33,7 @@ async def register_block(request: Request, db: saSession = Depends(get_db)):
         raise HTTPException(400, "Block already registered")
     create_block(
         db,
-        block=BlockCreate(id=hash_id),
+        block=BlockCreate(block_id=hash_id),
         owner_id=data["player_uuid"],
     )
     return True
