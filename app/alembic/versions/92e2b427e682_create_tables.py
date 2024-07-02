@@ -29,13 +29,13 @@ def upgrade() -> None:
     )
     op.create_table(
         "blocks",
-        sa.Column("id", sa.String(), nullable=False),
+        sa.Column("block_id", sa.String(), nullable=False),
         sa.Column("owner_id", sa.String(), nullable=True),
         sa.ForeignKeyConstraint(
             ["owner_id"],
             ["players.uuid"],
         ),
-        sa.PrimaryKeyConstraint("id"),
+        sa.PrimaryKeyConstraint("block_id"),
     )
     # ### end Alembic commands ###
 

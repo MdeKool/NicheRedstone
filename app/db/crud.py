@@ -5,11 +5,11 @@ from app.db import models, schemas
 
 
 def get_player(db: Session, uuid: str):
-    return db.query(models.Player).filter(models.Player.uuid == uuid).first()
+    return db.query(models.Player).filter(models.Player.uuid.is_(uuid)).first()
 
 
 def get_player_by_username(db: Session, username: str):
-    return db.query(models.Player).filter(models.Player.username == username).first()
+    return db.query(models.Player).filter(models.Player.username.is_(username)).first()
 
 
 def get_players(db: Session, skip: int = 0, limit: int = 100):
@@ -29,11 +29,11 @@ def get_blocks(db: Session, skip: int = 0, limit: int = 100):
 
 
 def get_block_by_id(db: Session, block_id: str):
-    return db.query(models.Block).filter(models.Block.id == block_id).first()
+    return db.query(models.Block).filter(models.Block.block_id.is_(block_id)).first()
 
 
 def create_block(db: Session, block: schemas.BlockCreate, owner_id: str):
-    db_block = models.Block(**block.dict(), owner_id=owner_id)
+    db_block = models.Block(**block.model_dump(), owner_id=owner_id)
     db.add(db_block)
     db.commit()
     db.refresh(db_block)
@@ -41,7 +41,7 @@ def create_block(db: Session, block: schemas.BlockCreate, owner_id: str):
 
 
 def create_task(db: Session, task: schemas.TaskCreate, parent_id: int = None):
-    db_task = models.Task(**task.dict(), parent_id=parent_id)
+    db_task = models.Task(**task.model_dump(), parent_id=parent_id)
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
@@ -52,12 +52,22 @@ def get_tasks(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Task).offset(skip).limit(limit).all()
 
 
+def get_root_tasks(db: Session, skip: int = 0, limit: int = 100):
+    return (
+        db.query(models.Task)
+        .filter(models.Task.parent_id.is_(None))
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+
 def update_task_status(db: Session, task_id: int, update: schemas.TaskUpdate):
-    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    task = db.query(models.Task).filter(models.Task.task_id.is_(task_id)).first()
     if not task:
         raise HTTPException(404, "Task not found")
 
-    for key, value in update.dict(exclude_unset=True).items():
+    for key, value in update.model_dump(exclude_unset=True).items():
         setattr(task, key, value)
 
     db.commit()
