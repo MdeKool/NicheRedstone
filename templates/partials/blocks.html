@@ -4,6 +4,7 @@
 
 {% block styling %}
     <link rel="stylesheet" href="/styling/blocks.css">
+    <link rel="stylesheet" href="/styling/actionbar.css">
 {% endblock %}
 
 {% block title %}
@@ -17,15 +18,15 @@ Blocks
 {% block main %}
     <div id="blocks-container">
         <div id="action-bar">
-            <button id="block-add" class="block-actions" onclick="add_block()">+</button>
-            <select id="block-sort" class="block-actions" onchange="change_sort();">
+            <button id="block-add" class="actions">+</button>
+            <select id="block-sort" class="actions">
                 <option value="block_id">Block ID</option>
                 <option value="owner">Owner</option>
             </select>
         </div>
         <div id="blocks">
             {% for b in blocks %}
-                {{ block(b.id[-12:], b.owner_id[-12:]) }}
+                {{ block(b.block_id[-12:], b.owner_id[-12:]) }}
             {% endfor %}
         </div>
     </div>
