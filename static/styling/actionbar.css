@@ -1,0 +1,39 @@
+#action-bar {
+    background-color: dimgrey;
+    display: flex;
+    flex: auto;
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    border-bottom: 2px solid black;
+    /*border-top-left-radius: 8px;*/
+    /*border-top-right-radius: 8px;*/
+}
+
+#action-bar button {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 24px;
+    color: #2f2f2f;
+    background-color: grey;
+    border-radius: 12px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+}
+
+#action-bar button:hover {
+    outline: 2px darkslategrey solid;
+}
+
+/*#action-bar select {*/
+/*    background-color: dimgrey;*/
+/*    border: none;*/
+/*}*/
+
+/*#action-bar select:hover {*/
+/*}*/
+
+.actions {
+    margin: 0 10px 0 10px;
+}
