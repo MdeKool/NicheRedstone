@@ -22,7 +22,7 @@ async def create_task(request: Request, db: Session = Depends(get_db)):
     if db_create_task(
         db,
         task=TaskCreate(name=task_name, description=task_desc),
-        parent_id=task_parent
+        parent_id=task_parent,
     ):
         return {"success": True}
     return {"success": False}
@@ -43,8 +43,5 @@ async def root(request: Request, db: Session = Depends(get_db)):
     tasks = get_root_tasks(db)
     return templates.TemplateResponse(
         "partials/roadmap.html",
-        {
-            "request": request,
-            "tasks": tasks
-        },
+        {"request": request, "tasks": tasks},
     )

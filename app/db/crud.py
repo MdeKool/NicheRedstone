@@ -53,7 +53,13 @@ def get_tasks(db: Session, skip: int = 0, limit: int = 100):
 
 
 def get_root_tasks(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Task).filter(models.Task.parent_id.is_(None)).offset(skip).limit(limit).all()
+    return (
+        db.query(models.Task)
+        .filter(models.Task.parent_id.is_(None))
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 
 def update_task_status(db: Session, task_id: int, update: schemas.TaskUpdate):
