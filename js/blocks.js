@@ -1,3 +1,14 @@
+const add_block_btn = document.getElementById("block-add");
+add_block_btn.addEventListener("click", async () => {
+    await add_block();
+});
+
+const sort_blocks_selector = document.getElementById("block-sort");
+sort_blocks_selector.addEventListener("selectionchange", async () => {
+    await change_sort();
+});
+
+
 async function add_block() {
     fetch("/blocks/add",
         {
