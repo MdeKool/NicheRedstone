@@ -1,3 +1,4 @@
+/* Tasks */
 ul {
     font-family: Britannic Bold, cursive;
     font-size: 24px;
@@ -10,8 +11,22 @@ ul li:last-child {
 
 ul li input:checked + label{
     text-decoration: line-through;
+    text-decoration-color: black;
 }
 
+#task-list ul li button {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 20px;
+    /*color: #2f2f2f;*/
+    background-color: #3f4f4f;
+    border: none;
+    border-radius: 12px;
+    outline: 1px solid black;
+    cursor: pointer;
+}
+
+
+/* New Task */
 .overlay {
     position: fixed;
     top: 0;
