@@ -1,4 +1,4 @@
-{% macro task(t) %}
+    {% macro task(t) %}
     <li>
         <input type="checkbox" id="task-{{ t.task_id }}">
         <label for="task-{{ t.task_id }}">
@@ -7,7 +7,9 @@
                 : {{ t.description }}
             {% endif %}
         </label>
-        <button class="new-sub-task" id="task-{{ t.task_id }}">new sub-task</button>
+        <button class="new-sub-task" id="task-{{ t.task_id }}">+</button>
+        <button class="edit-task" id="task-{{ t.task_id }}"><i class="fa fa-pencil"></i></button>
+        <button class="remove-task" id="task-{{ t.task_id }}">-</button>
         <ul>
             {% for st in t.subtasks %}
                 {{ task(st) }}
