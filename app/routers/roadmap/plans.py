@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
-from app.db.crud import create_task as db_create_task, get_root_tasks
+from app.db.crud import create_task as db_create_task, get_root_tasks, delete_task
 from app.db.schemas import TaskCreate
 from app.util.db_dependency import get_db
 
@@ -45,3 +45,12 @@ async def add_task(request: Request, db: Session = Depends(get_db)):
             "request": request,
         },
     )
+
+
+@router.put("/remove")
+async def remove_task(request: Request, db: Session = Depends(get_db)):
+    data = await request.json()
+    task_id = data["task_id"]
+    if delete_task(db, task_id):
+        return {"success": True}
+    return {"success": False}
