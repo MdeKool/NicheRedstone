@@ -49,12 +49,16 @@ def create_task(db: Session, task: schemas.TaskCreate, parent_id: int = None):
 
 
 def delete_task(db: Session, task_id: int):
-    db_task = get_task_by_id(db, task_id)
-    for t in db_task.subtasks:
-        delete_task(db, t.task_id)
-    db.delete(db_task)
-    db.commit()
-    return db_task
+    try:
+        db_task = get_task_by_id(db, task_id)
+        for t in db_task.subtasks:
+            delete_task(db, t.task_id)
+        db.delete(db_task)
+        db.commit()
+    except Exception as e:
+        print("Something went wrong", e)
+        raise e
+    return True
 
 
 def get_tasks(db: Session, skip: int = 0, limit: int = 100):
