@@ -3,9 +3,16 @@ add_btn.addEventListener("click", async () => {
     await add_overlay();
 });
 
-const new_sub_task_btns = document.getElementsByClassName("new-sub-task");
-Array.from(new_sub_task_btns).forEach(el => {
-    el.addEventListener("click", () => add_overlay( parseInt(el.id.slice(5, 6)) ) );
+$("#task-list").on("click", ".new-sub-task, .remove-task", async event => {
+    const id = parseInt(event.target.id.slice(5, 6));
+
+    if ($(event.target).hasClass("new-sub-task")) {
+        await add_overlay(id);
+    } else if ($(event.target).hasClass("edit-task")) {
+        void(0); // TODO Edit task function call
+    } else if ($(event.target).hasClass("remove-task")) {
+        await remove_task(id);
+    }
 });
 
 
@@ -46,15 +53,16 @@ async function add_overlay(parent = null) {
 
 
 async function add_task(name, desc, parent = null) {
-    fetch("/plans/new", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            task_name: name,
-            task_description: desc,
-            task_parent: parent,
+    fetch("/plans/new",
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                task_name: name,
+                task_description: desc,
+                task_parent: parent,
         })
     }).then(response => response.json())
     .then(data => {
@@ -82,5 +90,23 @@ async function add_task(name, desc, parent = null) {
             e_message.innerHTML = "<p>&#x26A0; Something went wrong!</p>";
             prompt.insertBefore(e_message, btns);
         }
-    })
+    });
+}
+
+
+async function remove_task(task_id) {
+    fetch("/plans/remove",
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({task_id: task_id}),
+        }).then(response => response.json())
+        .then(async data => {
+            if (!data["success"]) {
+                // TODO Handle No success
+            }
+            $("#task-list").load(window.location.href + " #task-list")
+        });
 }
