@@ -10,6 +10,15 @@ router = APIRouter(prefix="/plans")
 templates = Jinja2Templates(directory="templates")
 
 
+@router.get("/")
+async def root(request: Request, db: Session = Depends(get_db)):
+    tasks = get_root_tasks(db)
+    return templates.TemplateResponse(
+        "partials/roadmap.html",
+        {"request": request, "tasks": tasks},
+    )
+
+
 @router.put("/new")
 async def create_task(request: Request, db: Session = Depends(get_db)):
     data = await request.json()
@@ -31,17 +40,8 @@ async def create_task(request: Request, db: Session = Depends(get_db)):
 @router.post("/new")
 async def add_task(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(
-        "partials/new_task.html",
+        "partials/tasks/new_task.html",
         {
             "request": request,
         },
-    )
-
-
-@router.get("/")
-async def root(request: Request, db: Session = Depends(get_db)):
-    tasks = get_root_tasks(db)
-    return templates.TemplateResponse(
-        "partials/roadmap.html",
-        {"request": request, "tasks": tasks},
     )
