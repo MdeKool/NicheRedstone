@@ -8,6 +8,10 @@ ul li:last-child {
     margin-bottom: 10px;
 }
 
+ul li input:checked + label{
+    text-decoration: line-through;
+}
+
 .overlay {
     position: fixed;
     top: 0;

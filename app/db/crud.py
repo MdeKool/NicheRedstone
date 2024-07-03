@@ -48,6 +48,15 @@ def create_task(db: Session, task: schemas.TaskCreate, parent_id: int = None):
     return db_task
 
 
+def delete_task(db: Session, task_id: int):
+    db_task = get_task_by_id(db, task_id)
+    for t in db_task.subtasks:
+        delete_task(db, t.task_id)
+    db.delete(db_task)
+    db.commit()
+    return db_task
+
+
 def get_tasks(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Task).offset(skip).limit(limit).all()
 
@@ -60,6 +69,10 @@ def get_root_tasks(db: Session, skip: int = 0, limit: int = 100):
         .limit(limit)
         .all()
     )
+
+
+def get_task_by_id(db: Session, task_id: int):
+    return db.query(models.Task).filter(models.Task.task_id.is_(task_id)).first()
 
 
 def update_task_status(db: Session, task_id: int, update: schemas.TaskUpdate):
