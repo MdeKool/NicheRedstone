@@ -1,14 +1,14 @@
 {% macro block(id, owner_id) %}
-    <div class="block" id="block-{{ id }}" data-owner="{{ owner_id }}">
+    <div class="block" data-id="{{ id }}" data-owner="{{ owner_id }}">
         <p>
-            ID: {{ id }}<br>
+            ID: {{ id[-12:] }}<br>
             Owner: {{ owner_id }}
             Status: TODO
         </p>
         <div class="block-buttons">
-            <button onclick="remove_block({{ id }});">&#x2716;</button>
-            <button onclick="send_signal({{ id }})">Pulse</button>
-            <button>Right</button>
+            <button class="remove-block">&#x2716;</button>
+            <button class="send-pulse">Pulse</button>
+            <button class="toggle">Toggle</button>
         </div>
     </div>
 {% endmacro %}
