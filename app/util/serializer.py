@@ -1,10 +1,3 @@
-from os import environ
-from dotenv import load_dotenv
-
-load_dotenv()
-KEY = int(environ.get('SERIALIZER_KEY'), 16)
-
-
 def serialize(x, y, z):
     # Shift the coordinates to avoid negative values
     x_shifted = x + (1 << 20)  # Shift by 2^20
