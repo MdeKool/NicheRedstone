@@ -1,6 +1,6 @@
     {% macro task(t) %}
     <li>
-        <input type="checkbox" id="task-{{ t.task_id }}">
+        <input type="checkbox" class="task-status" id="task-{{ t.task_id }}" {% if t.status == "DONE" %} checked {% endif %}>
         <label for="task-{{ t.task_id }}">
             {{ t.name }}
             {% if t.description %}
