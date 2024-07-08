@@ -79,12 +79,12 @@ def get_task_by_id(db: Session, task_id: int):
     return db.query(models.Task).filter(models.Task.task_id.is_(task_id)).first()
 
 
-def update_task_status(db: Session, task_id: int, update: schemas.TaskUpdate):
+def update_task(db: Session, task_id: int, update: schemas.TaskUpdate):
     task = db.query(models.Task).filter(models.Task.task_id.is_(task_id)).first()
     if not task:
         raise HTTPException(404, "Task not found")
 
-    for key, value in update.model_dump(exclude_unset=True).items():
+    for key, value in update.model_dump(exclude_none=True).items():
         setattr(task, key, value)
 
     db.commit()
