@@ -1,40 +1,51 @@
-const add_block_btn = document.getElementById("block-add");
-add_block_btn.addEventListener("click", async () => {
-    await add_block();
+$("#action-bar").on("click", "#blocks-reload, #block-sort", async event => {
+    if ($(event.target).id === "blocks-reload") {
+        $("#blocks").load(window.location.href + " #blocks");
+    } else if ($(event.target).id === "blocks-sort") {
+        await change_sort();
+    }
 });
 
-const sort_blocks_selector = document.getElementById("block-sort");
-sort_blocks_selector.addEventListener("selectionchange", async () => {
-    await change_sort();
+
+let paused = true
+let t = setInterval(() => {
+    if (!paused) {
+        $("#blocks").load(window.location.href + " #blocks");
+    }
+}, 10000);
+
+
+$("#auto-reload").change(function() {
+    paused = !$(this).is(":checked");
+})
+
+
+$(".block").on("click", ".remove-block, .send-pulse, .toggle", async event => {
+    const block = $(event.target).closest(".block")[0];
+
+    if ($(event.target).hasClass("remove-block")) {
+        await remove_block(block.dataset.id);
+    } else if ($(event.target).hasClass("send-pulse")) {
+        await send_signal(block.dataset.id);
+    } else if ($(event.target).hasClass("toggle")) {
+        await send_signal(block.dataset.id, true);
+    }
 });
 
 
-async function add_block() {
-    fetch("/blocks/add",
-        {
-            method: "PUT"
-        })
-        .then(response => response.text())
-        .then(html => {
-            const block_list = document.getElementById("blocks");
-            block_list.insertAdjacentHTML("beforeend", html);
-        });
-}
-
-
-async function remove_block(blockId) {
+async function remove_block(block_id) {
     fetch("/blocks/remove",
         {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({blockId: blockId})
+            body: JSON.stringify({block_id: block_id})
         })
         .then(response => response.json())
         .then(data => {
             if (data) {
-                document.getElementById(`block-${blockId}`).remove();
+                $("#blocks").load(window.location.href + " #blocks");
             }
         });
 }
@@ -54,7 +65,7 @@ async function send_signal(id, persist=false) {
         })
         .then(response => response.json())
         .then(data => {
-            if (!data["success"]) {
+            if (!data) {
                 alert("Something went wrong!");
             }
         });
