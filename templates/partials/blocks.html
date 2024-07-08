@@ -12,21 +12,27 @@ Blocks
 {% endblock %}
 
 {% block javascript %}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script defer src="/js/blocks.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block main %}
     <div id="blocks-container">
         <div id="action-bar">
-            <button id="block-add" class="actions">+</button>
-            <select id="block-sort" class="actions">
+            <select id="blocks-sort" class="actions">
                 <option value="block_id">Block ID</option>
                 <option value="owner">Owner</option>
             </select>
+            <button id="blocks-reload">&#x27F3;</button>
+            <label class="actions switch">
+                <input type="checkbox" id="auto-reload">
+                <span class="slider"></span>
+                auto refresh
+            </label>
         </div>
         <div id="blocks">
             {% for b in blocks %}
-                {{ block(b.block_id[-12:], b.owner_id[-12:]) }}
+                {{ block(b.block_id, b.owner_id[-12:]) }}
             {% endfor %}
         </div>
     </div>
