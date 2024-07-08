@@ -1,28 +1,32 @@
+from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
+KEY = int(environ.get('SERIALIZER_KEY'), 16)
+
+
 def serialize(x, y, z):
-    # Ensure the coordinates fit within 32 bits
-    x &= 0xFFFFFFFF
-    y &= 0xFFFFFFFF
-    z &= 0xFFFFFFFF
+    # Shift the coordinates to avoid negative values
+    x_shifted = x + (1 << 20)  # Shift by 2^20
+    y_shifted = y + (1 << 20)
+    z_shifted = z + (1 << 20)
 
-    # Pack the coordinates into two 64-bit integers
-    packed1 = (x | (y << 32)) & 0xFFFFFFFFFFFFFFFF
-    packed2 = z & 0xFFFFFFFFFFFFFFFF
-
-    # Obfuscate the packed values with XOR
-    obfuscated1 = packed1 ^ SECRET_KEY
-    obfuscated2 = packed2 ^ SECRET_KEY
-
-    return obfuscated1, obfuscated2
+    # Combine the shifted coordinates into a single value
+    value = (x_shifted << 42) | (y_shifted << 21) | z_shifted
+    return hex(value)
 
 
-def deserialize(obfuscated1, obfuscated2):
-    # De-obfuscate the packed values with XOR
-    packed1 = obfuscated1 ^ SECRET_KEY
-    packed2 = obfuscated2 ^ SECRET_KEY
+def deserialize(value):
+    value = int(value, 16)
 
-    # Unpack the coordinates
-    x = packed1 & 0xFFFFFFFF
-    y = (packed1 >> 32) & 0xFFFFFFFF
-    z = packed2 & 0xFFFFFFFF
+    # Extract the shifted coordinates from the single value
+    x_shifted = (value >> 42) & ((1 << 21) - 1)
+    y_shifted = (value >> 21) & ((1 << 21) - 1)
+    z_shifted = value & ((1 << 21) - 1)
 
-    return x, y, z
+    # Shift the coordinates back to their original values
+    x = x_shifted - (1 << 20)
+    y = y_shifted - (1 << 20)
+    z = z_shifted - (1 << 20)
+
+    return f"{x}, {y}, {z}"
