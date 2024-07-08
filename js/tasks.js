@@ -3,7 +3,7 @@ add_btn.addEventListener("click", async () => {
     await add_overlay();
 });
 
-$("#task-list").on("click", ".new-sub-task, .remove-task", async event => {
+$("#task-list").on("click", ".new-sub-task, .edit-task, .remove-task", async event => {
     const id = parseInt(event.target.id.slice(5, 6));
 
     if ($(event.target).hasClass("new-sub-task")) {
@@ -13,6 +13,23 @@ $("#task-list").on("click", ".new-sub-task, .remove-task", async event => {
     } else if ($(event.target).hasClass("remove-task")) {
         await remove_task(id);
     }
+});
+
+$("#task-list").on("change", ".task-status", async event => {
+    const id = parseInt(event.target.id.slice(5, 6));
+    const status = event.target.checked ? "DONE" : "TO-DO";
+
+    fetch("/plans/update",
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                task_id: id,
+                status: status,
+            }),
+    }).then(response => response.json());
 });
 
 
@@ -82,7 +99,7 @@ async function add_task(name, desc, parent = null) {
                 snackbar.innerHTML = "";
             }, 3000);
 
-            $( "#task-list" ).load(window.location.href + " #task-list" );
+            $("#task-list").load(window.location.href + " #task-list" );
         } else {
             const prompt = document.getElementById("prompt");
             const btns = document.getElementById("task-btns");
