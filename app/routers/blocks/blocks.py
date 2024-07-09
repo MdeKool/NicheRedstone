@@ -67,5 +67,5 @@ async def remove_block(request: Request, db: saSession = Depends(get_db)):
     if block:
         db.delete(block)
         db.commit()
-        return True
-    return False
+        return {"success": True}
+    return {"success": False}
