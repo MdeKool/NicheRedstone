@@ -20,7 +20,7 @@ $("#auto-reload").change(function() {
 })
 
 
-$(".block").on("click", ".remove-block, .send-pulse, .toggle", async event => {
+$("#blocks").on("click", ".remove-block, .send-pulse, .toggle", async event => {
     const block = $(event.target).closest(".block")[0];
 
     if ($(event.target).hasClass("remove-block")) {
@@ -44,9 +44,10 @@ async function remove_block(block_id) {
         })
         .then(response => response.json())
         .then(data => {
-            if (data) {
-                $("#blocks").load(window.location.href + " #blocks");
+            if (!data["success"]) {
+                alert("Something went wrong");
             }
+            $("#blocks").load(window.location.href + " #blocks");
         });
 }
 
