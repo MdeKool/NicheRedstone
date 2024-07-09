@@ -54,7 +54,7 @@ async def send_pulse(request: Request, db: saSession = Depends(get_db)):
     data = await request.json()
     data["block_id"] = deserialize(data["block_id"])
     async with httpx.AsyncClient() as client:
-        return (await client.post("http://172.18.0.1:25567/signal", json=data)).is_success
+        return (await client.post("http://172.17.0.1:25567/signal", json=data)).is_success
 
 
 @router.put("/remove")
