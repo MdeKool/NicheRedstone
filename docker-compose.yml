@@ -1,17 +1,35 @@
-version: "3.9"
-
 services:
-  web:
+  webserver:
     build:
       dockerfile: docker/Dockerfile
     ports:
       - "8000:8000"
+    networks:
+      - webnet
     volumes:
       - ./:/app
       - ./.database:/var/opt/db
     environment:
       - DATABASE_URL=sqlite:////var/opt/db/ServerBlock.db
     command: >
-      sh -c "alembic upgrade head
-      && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
-#      sh -c "gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000 app.main:app"
+      sh -c "gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000 app.main:app"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      # Uncomment if you want to run the website on https
+      # - "443:443"
+    volumes:
+      # If you have ssl certificates for your website uncomment the next line and replace it with the location for
+      # your certificates followed by the location in the container to store them.
+      # - /path/to/certificates:/container/path/to/certificates
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - webserver
+    networks:
+      - webnet
+
+networks:
+  webnet:
