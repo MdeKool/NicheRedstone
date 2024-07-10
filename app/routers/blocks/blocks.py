@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session as saSession
 
 from app.util.db_dependency import get_db
 from app.db.schemas import BlockCreate
-from app.db.crud import create_block, get_blocks, get_block_by_id
+from app.db.crud import create_block, get_blocks, get_block_by_id, delete_block
 from app.util.serializer import serialize, deserialize
 
 templates = Jinja2Templates(directory="templates")
@@ -34,6 +34,21 @@ async def register_block(request: Request, db: saSession = Depends(get_db)):
         owner_id=data["player_uuid"],
     )
     return True
+
+
+@router.post("/deregister")
+async def deregister_block(request: Request, db: saSession = Depends(get_db)):
+    data = await request.json()
+    coordinates = list(map(int, data["block_id"].split(", ")))
+    serialized_id = serialize(*coordinates)
+    block = get_block_by_id(db, serialized_id)
+    if block is None:
+        raise HTTPException(400, "Block not registered")
+    try:
+        delete_block(db, block)
+        return True
+    except Exception as e:
+        raise e
 
 
 @router.put("/add")
