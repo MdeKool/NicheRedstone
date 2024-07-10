@@ -40,6 +40,15 @@ def create_block(db: Session, block: schemas.BlockCreate, owner_id: str):
     return db_block
 
 
+def delete_block(db: Session, block: models.Block):
+    try:
+        db.delete(block)
+        db.commit()
+    except Exception as e:
+        print("Something went wrong", e)
+        raise e
+
+
 def create_task(db: Session, task: schemas.TaskCreate, parent_id: int = None):
     db_task = models.Task(**task.model_dump(), parent_id=parent_id)
     db.add(db_task)
