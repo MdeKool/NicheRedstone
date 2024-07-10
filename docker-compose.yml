@@ -1,5 +1,6 @@
 services:
   webserver:
+    container_name: webserver
     build:
       dockerfile: docker/Dockerfile
     ports:
@@ -9,8 +10,6 @@ services:
     volumes:
       - ./:/app
       - ./.database:/var/opt/db
-    environment:
-      - DATABASE_URL=sqlite:////var/opt/db/ServerBlock.db
     command: >
       sh -c "gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000 app.main:app"
 
