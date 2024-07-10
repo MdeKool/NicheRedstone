@@ -18,7 +18,7 @@ services:
     container_name: nginx
     ports:
       - "80:80"
-      # Uncomment if you want to run the website on https
+      # Uncomment if you want to run the website over https
       # - "443:443"
     volumes:
       # If you have ssl certificates for your website uncomment the next line and replace it with the location for
