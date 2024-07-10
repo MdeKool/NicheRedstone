@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Minecraft WiFi Block"
-version = "0.2.0"
+version = "0.3.0"
 description = "A frontend for the MC WiFi Block mod"
 authors = ["M de Kool <matthijsdekool@gmail.com>"]
 readme = "README.md"
